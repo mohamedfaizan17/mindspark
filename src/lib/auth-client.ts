@@ -4,6 +4,8 @@ export interface User {
   email: string
   firstName: string | null
   lastName: string | null
+  currentRole: string | null
+  targetRole: string | null
   createdAt: string
   updatedAt: string
 }
@@ -62,7 +64,9 @@ export const signUp = async (
   email: string,
   password: string,
   firstName?: string,
-  lastName?: string
+  lastName?: string,
+  currentRole?: string,
+  targetRole?: string
 ): Promise<AuthResult> => {
   try {
     const users = getUsers()
@@ -84,6 +88,8 @@ export const signUp = async (
       password: hashedPassword,
       firstName: firstName || null,
       lastName: lastName || null,
+      currentRole: currentRole || null,
+      targetRole: targetRole || null,
       createdAt: now,
       updatedAt: now
     }

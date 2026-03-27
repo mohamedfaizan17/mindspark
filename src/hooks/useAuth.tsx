@@ -4,7 +4,7 @@ import { signUp as authSignUp, signIn as authSignIn, getCurrentUser, User } from
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  signUp: (email: string, password: string, firstName?: string, lastName?: string) => Promise<{ error?: string }>;
+  signUp: (email: string, password: string, firstName?: string, lastName?: string, currentRole?: string, targetRole?: string) => Promise<{ error?: string }>;
   signIn: (email: string, password: string) => Promise<{ error?: string }>;
   signOut: () => Promise<{ error?: string }>;
 }
@@ -43,9 +43,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }, []);
 
-  const signUp = async (email: string, password: string, firstName?: string, lastName?: string) => {
+  const signUp = async (email: string, password: string, firstName?: string, lastName?: string, currentRole?: string, targetRole?: string) => {
     try {
-      const result = await authSignUp(email, password, firstName, lastName);
+      const result = await authSignUp(email, password, firstName, lastName, currentRole, targetRole);
       
       if (result.error) {
         return { error: result.error };

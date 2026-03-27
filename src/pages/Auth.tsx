@@ -17,6 +17,8 @@ const Auth = () => {
     password: '',
     firstName: '',
     lastName: '',
+    currentRole: '',
+    targetRole: '',
   });
 
   const { signIn, signUp, user, loading: authLoading } = useAuth();
@@ -38,7 +40,7 @@ const Auth = () => {
       if (isLogin) {
         result = await signIn(formData.email, formData.password);
       } else {
-        result = await signUp(formData.email, formData.password, formData.firstName, formData.lastName);
+        result = await signUp(formData.email, formData.password, formData.firstName, formData.lastName, formData.currentRole, formData.targetRole);
       }
 
       if (result.error) {
@@ -111,30 +113,56 @@ const Auth = () => {
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               {!isLogin && (
-                <div className="grid grid-cols-2 gap-4">
+                <>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="firstName">First Name</Label>
+                      <Input
+                        id="firstName"
+                        type="text"
+                        placeholder="John"
+                        value={formData.firstName}
+                        onChange={(e) => handleInputChange('firstName', e.target.value)}
+                        required={!isLogin}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="lastName">Last Name</Label>
+                      <Input
+                        id="lastName"
+                        type="text"
+                        placeholder="Doe"
+                        value={formData.lastName}
+                        onChange={(e) => handleInputChange('lastName', e.target.value)}
+                        required={!isLogin}
+                      />
+                    </div>
+                  </div>
+
                   <div className="space-y-2">
-                    <Label htmlFor="firstName">First Name</Label>
+                    <Label htmlFor="currentRole">Current Role</Label>
                     <Input
-                      id="firstName"
+                      id="currentRole"
                       type="text"
-                      placeholder="John"
-                      value={formData.firstName}
-                      onChange={(e) => handleInputChange('firstName', e.target.value)}
+                      placeholder="e.g., Software Developer, Student, Marketing Manager"
+                      value={formData.currentRole}
+                      onChange={(e) => handleInputChange('currentRole', e.target.value)}
                       required={!isLogin}
                     />
                   </div>
+
                   <div className="space-y-2">
-                    <Label htmlFor="lastName">Last Name</Label>
+                    <Label htmlFor="targetRole">Target Role</Label>
                     <Input
-                      id="lastName"
+                      id="targetRole"
                       type="text"
-                      placeholder="Doe"
-                      value={formData.lastName}
-                      onChange={(e) => handleInputChange('lastName', e.target.value)}
+                      placeholder="e.g., Senior Developer, Data Scientist, Product Manager"
+                      value={formData.targetRole}
+                      onChange={(e) => handleInputChange('targetRole', e.target.value)}
                       required={!isLogin}
                     />
                   </div>
-                </div>
+                </>
               )}
               
               <div className="space-y-2">
